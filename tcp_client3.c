@@ -18,11 +18,12 @@ int main(int argc, char **argv)
   struct in_addr **addrs;
   FILE *fp;
 
-  if (argc != 2) {
+  if (argc != 3) {
     printf("parameters not match");
   }
   //unix magic
-  sh = gethostbyname(argv[1]);	                                       //get host's information
+  sh = gethostbyname(argv[1]); //get host's information
+  char * filename = argv[2];
   if (sh == NULL) {
     printf("error when gethostby name");
     exit(0);
@@ -62,7 +63,7 @@ int main(int argc, char **argv)
     exit(1);
   }
 	
-  if((fp = fopen ("myfile.txt","r+t")) == NULL)
+  if((fp = fopen (filename,"r+t")) == NULL)
     {
       printf("File doesn't exit\n");
       exit(0);

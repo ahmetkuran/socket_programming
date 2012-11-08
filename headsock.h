@@ -17,7 +17,7 @@
 #define MYTCP_PORT 4950
 #define MYUDP_PORT 5350
 #define DATALEN 500
-#define BUFSIZE 60000
+#define BUFSIZE 1000000
 #define PACKLEN 508
 #define HEADLEN 8
 

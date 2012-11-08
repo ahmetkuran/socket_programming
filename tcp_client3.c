@@ -119,26 +119,26 @@ float str_cli(FILE *fp, int sockfd, long *len)
       packet.num = packNum;
       sendn = send(sockfd, &packet,sizeof(packet),0);
       printf("packet sent\n");
-      printf("packet no:%d",packNum);
-      packNum++;
+      printf("packet no:%d\n",packNum);
+      
       if(sendn == -1) {
 	printf("send error!");								//send the data
 	exit(1);
       }
-      wait = 1;
       
-	  recvn = recv(sockfd, &ack, 2, 0);
-	  if (recvn==-1)                                   //receive the ack
-	    {
-	      printf("error when receiving\n");
-	      exit(1);
-	    }
-	  printf(" ack recieved ");
-	  if (ack.num != 1|| ack.len != 0)
-	    printf("error in transmissi on\n");    
-	  wait = 0;
+      
+      recvn = recv(sockfd, &ack, 2, 0);
+      if (recvn==-1)                                   //receive the ack
+        {
+          printf("error when receiving\n");
+          exit(1);
+        }
+      printf(" ack %d recieved \n", ack.num);
+      if (ack.num!=packNum || ack.len != 0)
+        printf("error in transmission\n");    
+	  
 
-	
+      packNum++;
       ci += slen;
     }
   gettimeofday(&recvt, NULL);

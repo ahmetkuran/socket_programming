@@ -21,7 +21,7 @@ int main(int argc, char **argv)
   if (argc != 2) {
     printf("parameters not match");
   }
-
+  //unix magic
   sh = gethostbyname(argv[1]);	                                       //get host's information
   if (sh == NULL) {
     printf("error when gethostby name");
@@ -48,10 +48,13 @@ int main(int argc, char **argv)
       printf("error in socket");
       exit(1);
     }
+  // setting the server address
   ser_addr.sin_family = AF_INET;                                                      
   ser_addr.sin_port = htons(MYTCP_PORT);
+  // I feel why C++ is kinda better. Sorry linus..
   memcpy(&(ser_addr.sin_addr.s_addr), *addrs, sizeof(struct in_addr));
   bzero(&(ser_addr.sin_zero), 8);
+
   ret = connect(sockfd, (struct sockaddr *)&ser_addr, sizeof(struct sockaddr));         //connect the socket with the host
   if (ret != 0) {
     printf ("connection failed\n"); 
@@ -88,7 +91,6 @@ float str_cli(FILE *fp, int sockfd, long *len)
   struct timeval sendt, recvt;
   ci = 0;
   int wait = 0;
-
   fseek (fp , 0 , SEEK_END);
   lsize = ftell (fp);
   rewind (fp);
@@ -108,11 +110,12 @@ float str_cli(FILE *fp, int sockfd, long *len)
   int packNum = 0;
   while(ci<= lsize)
     {
+      //adjust length packet.data
       if ((lsize+1-ci) <= DATALEN)
 	slen = lsize+1-ci;
       else 
 	slen = DATALEN;
-      memcpy(sends, (buf+ci), slen);
+      //     memcpy(sends, (buf+ci), slen);
       
       memcpy(packet.data,(buf+ci),slen);
       packet.len = slen;
